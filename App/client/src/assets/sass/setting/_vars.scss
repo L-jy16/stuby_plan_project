@@ -1,0 +1,54 @@
+/** @format */
+
+:root {
+  --mainKo-font: "GangwonEduAll";
+  --mainSub-font: "NexonLv1Gothic";
+  --mainSub-font2: "Cafe24SsurroundAir";
+
+  --main-bg: #f1f4fa;
+  --font-color: #333;
+
+  --white: #ffffff;
+  --white100: #e8e8e8;
+  --white200: #d4d4d4;
+  --white300: #c1c1c1;
+  --white400: #6b6b6b;
+  --white500: #333333;
+  --white600: #00000000;
+
+  --black: #000000;
+  --black100: #101011;
+  --black200: #202020;
+  --black300: #303030;
+  --black400: #404040;
+  --black500: #505050;
+  --black600: rgba(0, 0, 0, 0.1); //투명
+  --black700: rgba(0, 0, 0, 0.3); //투명
+  --black800: rgba(0, 0, 0, 0.2); //투명
+
+  // blue
+  --blue100: #003380;
+  --blue200: #0047b3;
+  --blue300: #005ce6;
+  --blue400: #1a75ff;
+  --blue500: #4d94ff;
+  --blue600: #80b3ff;
+  --blue700: #b3d1ff;
+  --blue800: #e6f0ff;
+
+  /* 폰트를 부드럽게 렌더링하기 위한 속성  */
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* 아이폰 가로 모드에서 글씨 확대 금지 */
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (max-width: 800px) {
+  :root {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+}
