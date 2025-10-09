@@ -9,16 +9,16 @@ import DeletePopup from "../components/popup/DeletePopup";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../redux/authSlice";
+import { BASE_URL } from "../api";
 
 const Mypage = () => {
-  const id = ""; // 아이디
-  const [nickName, setNickName] = useState(""); //별칭
+  const user = useSelector((state) => state.user);
+  const id = user.id; // 아이디
+  const [nickName, setNickName] = useState(user.nickName); //별칭
   const [popup, setPopup] = useState(""); //별칭
   const [pass, setPass] = useState("");
   const [passC, setPassC] = useState("");
   const [change, setChange] = useState(false);
-
-  const user = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,6 +40,10 @@ const Mypage = () => {
     const { name, value } = event.target;
 
     switch (name) {
+      case "user_nickname_check":
+        setNickName(value);
+        break;
+
       case "user_pw":
         setPass(value);
         break;
@@ -57,10 +61,13 @@ const Mypage = () => {
     try {
       dispatch(logout());
       navigate(`/`);
+      return;
     } catch (error) {
       console.error(error);
     }
   };
+
+  const upDateBtn = async () => {};
 
   return (
     <>
@@ -76,7 +83,7 @@ const Mypage = () => {
                 src={user.photoURL}
               />
               <h3 className="user_name">
-                <strong>이이호</strong>님
+                <strong>{user.nickName}</strong>님
               </h3>
 
               <div className="btn_signal">
@@ -106,8 +113,8 @@ const Mypage = () => {
                       <span>이름</span>
                       <input
                         type="text"
-                        id="user_nickname"
-                        name="user_nickname"
+                        id="user_nickname_check"
+                        name="user_nickname_check"
                         placeholder="별칭 입력"
                         value={nickName}
                         onChange={ChangeHandle}
@@ -158,7 +165,12 @@ const Mypage = () => {
 
               <div className="btn_signal">
                 {change ? (
-                  <button className={`btn btn_green`}>저장</button>
+                  <button
+                    className={`btn btn_green`}
+                    onClick={isLoading ? undefined : upDateBtn}
+                  >
+                    저장
+                  </button>
                 ) : (
                   <button className={`btn btn_gray`} onClick={modfiyBtn}>
                     회원 수정

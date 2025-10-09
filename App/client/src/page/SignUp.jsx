@@ -4,12 +4,15 @@ import moment from "moment";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AlertPopup from "../components/popup/AlertPopup";
+import { BASE_URL } from "../api";
 
 const SignUp = () => {
   const [id, setId] = useState(""); // 아이디
+  const [id2, setId2] = useState(""); // 아이디
   const [nickName, setNickName] = useState(""); //별칭
   const [pass, setPass] = useState("");
   const [passC, setPassC] = useState("");
+  const [idCheck, setIdCheck] = useState(false);
   const today = new Date(); //오늘 날짜
   const contractDate = moment(today).format().slice(0, 10); // 계약일
 
@@ -17,6 +20,8 @@ const SignUp = () => {
   const [alertMessage, setAlertMessage] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const [title, setTitle] = useState("");
 
   const navgaite = useNavigate();
 
@@ -45,11 +50,183 @@ const SignUp = () => {
     }
   };
 
+  const idCheckfetch = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/api/user/idcheck`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: id,
+        }),
+      });
+
+      if (!response.ok) {
+        // throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+
+      return { success: data.success, check: data.check };
+    } catch (error) {
+      console.error("에러 발생:", error);
+    }
+  };
+
+  const joinfetch = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/api/user/join`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: id,
+          userNickName: nickName,
+          userPass: pass,
+          userRegisterDate: contractDate,
+          uid: "",
+          photoURL: "",
+        }),
+      });
+
+      if (!response.ok) {
+        // throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+
+      return data.success;
+    } catch (error) {
+      console.error("에러 발생:", error);
+    }
+  };
+
   // 아이디 중복
-  const userCheck = () => {};
+  const userCheck = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      if (!id) {
+        setAlertPopup(true);
+        setAlertMessage("아이디를 입력해 주세요.");
+        setIsLoading(false);
+        return;
+      }
+
+      const { success, check } = await idCheckfetch();
+      if (success) {
+        if (check) {
+          setAlertPopup(true);
+          setAlertMessage("사용 가능한 아이디입니다.");
+          setId2(id);
+          setIdCheck(true);
+          setIsLoading(false);
+          return;
+        } else {
+          setAlertPopup(true);
+          setAlertMessage("사용할 수 없는 아이디입니다.");
+          setIdCheck(false);
+          setIsLoading(false);
+          return;
+        }
+      } else {
+        setAlertPopup(true);
+        setAlertMessage("중복 확인 중 오류가 발생하였습니다.");
+        setIdCheck(false);
+        setIsLoading(false);
+        return;
+      }
+    } catch (error) {
+      console.error("에러 발생:", error);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // 회원 가입
-  const userSignUp = () => {};
+  const userSignUp = async (e) => {
+    setIsLoading(true);
+    try {
+      const regex = /^(?=.*[a-zA-Z])(?=.*\d).{6,}$/;
+
+      if (!idCheck) {
+        setAlertPopup(true);
+        setAlertMessage("아이디 중복 검사를 해주세요.");
+        setIsLoading(false);
+        return;
+      }
+
+      if (id2 !== id) {
+        setAlertPopup(true);
+        setAlertMessage("아이디 중복 검사를 다시 해주세요.");
+        setIdCheck(false);
+        setIsLoading(false);
+        return;
+      }
+
+      if (!regex.test(pass) && !regex.test(passC)) {
+        setAlertMessage("비밀번호를 영문과 숫자를 조합하여 입력해주세요.");
+        setAlertPopup(true);
+        setIsLoading(false);
+        setPass("");
+        setPassC("");
+        return;
+      }
+
+      if (!pass || !passC) {
+        setAlertPopup(true);
+        setAlertMessage("비밀 번호를 입력해 주세요.");
+        setIsLoading(false);
+
+        return;
+      } else if (pass !== passC) {
+        setAlertPopup(true);
+        setAlertMessage("비밀 번호를 확인 주세요.");
+        setPass("");
+        setPassC("");
+        setIsLoading(false);
+
+        return;
+      }
+
+      if (!nickName) {
+        setAlertPopup(true);
+        setAlertMessage("별칭을 입력해 주세요.");
+        setIsLoading(false);
+
+        return;
+      }
+
+      const success = await joinfetch();
+
+      if (success) {
+        setAlertPopup(true);
+        setAlertMessage("가입이 완료되었습니다.");
+        setTitle("회원가입");
+        setIsLoading(false);
+
+        return;
+      } else {
+        setAlertPopup(true);
+        setAlertMessage("회원 가입에 실패하였습니다.");
+        setIsLoading(false);
+
+        setId("");
+        setNickName("");
+        setPass("");
+        setPassC("");
+        return;
+      }
+    } catch (error) {
+      console.error("에러 발생:", error);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // 회원 가입 취소
   const cancleSignup = () => {
@@ -87,7 +264,10 @@ const SignUp = () => {
                   autoComplete="off"
                   autoFocus
                 />
-                <button className="checkbutton userCheck" onClick={userCheck}>
+                <button
+                  className={`checkbutton userCheck`}
+                  onClick={isLoading ? null : userCheck}
+                >
                   중복 확인
                 </button>
               </div>
@@ -165,6 +345,7 @@ const SignUp = () => {
 
       {alertPopup && (
         <AlertPopup
+          title={title}
           alertPopup={alertPopup}
           setAlertPopup={setAlertPopup}
           alertMessage={alertMessage}

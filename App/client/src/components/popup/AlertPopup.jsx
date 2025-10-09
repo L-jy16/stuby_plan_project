@@ -1,10 +1,17 @@
 /** @format */
 
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const AlertPopup = ({ alertPopup, setAlertPopup, alertMessage }) => {
+const AlertPopup = ({ alertPopup, setAlertPopup, alertMessage, title }) => {
+  const navgaite = useNavigate();
+
   const CloseAlertPopup = () => {
     setAlertPopup(false);
+
+    if (title === "회원가입") {
+      navgaite("/login");
+    }
   };
 
   return (

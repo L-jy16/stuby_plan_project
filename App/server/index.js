@@ -7,8 +7,10 @@ const mongoose = require("mongoose");
 const app = express();
 const port = 5050;
 // const port = process.env.PORT || 5050;
+const cors = require("cors");
 const config = require("./config/key.js");
 
+app.use(cors());
 app.use(express.static(path.join(__dirname, "../client/build")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

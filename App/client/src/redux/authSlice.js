@@ -7,7 +7,6 @@ const initialState = {
   id: "",
   nickName: "",
   uid: "",
-  accessToken: "",
   photoURL: "",
   isLoading: false,
 };
@@ -19,7 +18,6 @@ if (savedUser) {
   initialState.id = parsedUser.id;
   initialState.nickName = parsedUser.nickName;
   initialState.uid = parsedUser.uid;
-  initialState.accessToken = parsedUser.accessToken;
   initialState.photoURL = parsedUser.photoURL;
   initialState.isLoading = true;
 }
@@ -32,7 +30,6 @@ export const userSlice = createSlice({
       state.id = action.payload.id;
       state.nickName = action.payload.nickName;
       state.uid = action.payload.uid;
-      state.accessToken = action.payload.accessToken;
       state.photoURL = action.payload.photoURL;
       state.isLoading = true;
 
@@ -44,7 +41,6 @@ export const userSlice = createSlice({
       state.id = "";
       state.nickName = "";
       state.uid = "";
-      state.accessToken = "";
       state.photoURL = "";
       state.isLoading = false;
 

@@ -26,7 +26,7 @@ const Header = () => {
         <ul className="flex center">
           <li>
             <Link
-              to="/goal"
+              to={`${user.nickName ? "/goal" : "/login"}`}
               className={`${location.pathname === `/goal` ? "active" : ""}`}
             >
               학습 목표
@@ -34,7 +34,7 @@ const Header = () => {
           </li>
           <li>
             <Link
-              to="/calendar"
+              to={`${user.nickName ? "/calendar" : "/login"}`}
               className={`${location.pathname === `/calendar` ? "active" : ""}`}
             >
               캘린더
@@ -42,7 +42,7 @@ const Header = () => {
           </li>
           <li>
             <Link
-              to="/check"
+              to={`${user.nickName ? "/check" : "/login"}`}
               className={`${location.pathname === `/check` ? "active" : ""}`}
             >
               진행 상황

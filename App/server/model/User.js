@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema(
     userId: String,
     userNickName: String,
     userPass: String,
+    userRegisterDate: String,
     uid: String,
     photoURL: String,
   },

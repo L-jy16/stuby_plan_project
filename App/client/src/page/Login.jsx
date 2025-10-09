@@ -6,12 +6,16 @@ import { Link, useNavigate } from "react-router-dom";
 import ico_id from "../assets/images/ico_id.png";
 import ico_pw from "../assets/images/ico_pass.png";
 import AlertPopup from "../components/popup/AlertPopup";
+import { BASE_URL } from "../api";
+import { login } from "../redux/authSlice";
 
 const Login = () => {
   const [id, setId] = useState("");
   const [pass, setPass] = useState("");
   const [alertPopup, setAlertPopup] = useState(false); // alert 창
   const [alertMessage, setAlertMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const dispatch = useDispatch();
 
   const navgaite = useNavigate();
@@ -31,7 +35,60 @@ const Login = () => {
     }
   };
 
-  const loginBtn = async () => {};
+  const loginfetch = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/api/user/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: id,
+          userPass: pass,
+        }),
+      });
+
+      if (!response.ok) {
+        // throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+
+      return { success: data.success, data: data };
+    } catch (error) {
+      console.error("에러 발생:", error);
+    }
+  };
+
+  const loginBtn = async () => {
+    setIsLoading(true);
+    try {
+      const { success, data } = await loginfetch();
+
+      if (success) {
+        dispatch(
+          login({
+            id: data.userData.userId,
+            nickName: data.userData.userNickName,
+            uid: data.userData.uid,
+            photoURL: data.userData.photoURL,
+          })
+        );
+        navgaite("/");
+        return;
+      } else {
+        setAlertPopup(true);
+        setAlertMessage("로그인에 실패하였습니다");
+        setIsLoading(false);
+        return;
+      }
+    } catch (error) {
+      console.error("에러 발생:", error);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
@@ -77,7 +134,10 @@ const Login = () => {
           </div>
 
           <div className="btn_signal login_btn">
-            <button className="btn btn_green" onClick={loginBtn}>
+            <button
+              className="btn btn_green"
+              onClick={isLoading ? null : loginBtn}
+            >
               로그인
             </button>
           </div>
