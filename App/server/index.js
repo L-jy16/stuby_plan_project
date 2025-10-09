@@ -6,15 +6,16 @@ const mongoose = require("mongoose");
 
 const app = express();
 const port = 5050;
+// const port = process.env.PORT || 5050;
 const config = require("./config/key.js");
 
-app.use(express.static(path.join(__dirname, "./client/build")));
-app.use("/image", express.static("./image"));
+app.use(express.static(path.join(__dirname, "../client/build")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // express router
-app.use("/api/reple", require("./router/reple.js"));
+app.use("/api/user", require("./router/user.js"));
+// app.use("/api/post", require("./router/study.js"));
 
 app.listen(port, () => {
   mongoose
@@ -29,8 +30,8 @@ app.listen(port, () => {
 });
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+app.get(/.*/, (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });

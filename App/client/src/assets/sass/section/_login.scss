@@ -1,0 +1,97 @@
+/** @format */
+
+.login_container {
+  width: 100%;
+  height: 100vh;
+  margin: 0 auto;
+  align-content: center;
+
+  .login_wrap {
+    height: 30rem;
+    width: 40rem;
+    border: 1px solid var(--blue300);
+    border-radius: 3rem;
+    background-color: var(--white);
+    margin: 0 auto;
+
+    h2 {
+      padding: 2.5rem 0;
+      font-size: 2.5rem;
+      font-family: var(--title-font);
+      color: var(--blue500);
+      text-align: center;
+    }
+
+    .login_input {
+      width: 80%;
+      margin: 0 auto;
+
+      .user {
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        align-content: center;
+        justify-content: space-between;
+        padding: 5px 20px;
+        border: 1px solid var(--blue300);
+        border-radius: 5px;
+
+        label {
+          font-size: 0;
+          color: var(--blue200);
+
+          img {
+            width: 2.5rem;
+            margin-right: 0.8rem;
+          }
+        }
+
+        input {
+          width: 100%;
+          max-width: 60rem;
+          padding: 1rem 0;
+          border-radius: 0.5rem;
+          font-size: 1.5rem;
+          font-weight: 400;
+          background: none;
+          color: var(--blue200);
+
+          &:focus {
+            // background: #f0f0f0;
+            outline: none;
+          }
+
+          &::placeholder {
+            color: var(--blue200);
+          }
+        }
+      }
+    }
+
+    .signUp {
+      width: 80%;
+      text-align: right;
+      margin: 0 auto 1rem;
+      font-weight: bold;
+
+      span {
+        color: var(--white300);
+      }
+
+      a {
+        color: var(--blue200);
+        margin-left: 10px;
+        transition: width 0.3s ease;
+
+        &:hover {
+          color: var(--font-color);
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .login_btn {
+      margin-top: 2rem;
+    }
+  }
+}

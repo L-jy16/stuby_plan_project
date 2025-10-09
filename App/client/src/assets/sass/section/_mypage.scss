@@ -1,0 +1,98 @@
+/** @format */
+
+.mypage {
+  width: 70%;
+  height: 100%;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .mypage_info {
+    width: 50%;
+    height: 80%;
+
+    &.mypage_left {
+      flex-direction: column;
+
+      h3 {
+        text-align: center;
+        width: 100%;
+        font-size: 2rem;
+        margin: 1rem 0;
+
+        strong {
+          font-weight: bold;
+          font-family: var(--title-font);
+          margin-right: 0.5rem;
+        }
+      }
+
+      .btn_signal {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+
+        .logout_btn {
+          position: relative;
+          background: none;
+          font-size: 1.2rem;
+          padding: 0 1rem;
+          transition: all 0.3s ease;
+          cursor: pointer;
+          color: var(--black700);
+
+          &:hover {
+            color: var(--black500);
+          }
+
+          &::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--black500);
+            transition: width 0.3s ease;
+          }
+
+          &:hover::after {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    &.mypage_right {
+      flex-wrap: wrap;
+
+      .user_info {
+        width: 100%;
+        height: 50%;
+
+        .modal_select {
+          input {
+            text-align: center;
+            border-bottom: 1px solid var(--blue300);
+          }
+        }
+      }
+
+      .btn_signal {
+        margin-top: 1rem;
+        width: 100%;
+      }
+    }
+  }
+
+  .btn_signal {
+    width: 100%;
+    justify-content: flex-end;
+
+    .btn_red {
+      width: 10rem;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+  }
+}

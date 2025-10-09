@@ -1,11 +1,11 @@
 /** @format */
 
 :root {
-  --mainKo-font: "GangwonEduAll";
+  --mainKo-font: "GMarketSans";
   --mainSub-font: "NexonLv1Gothic";
-  --mainSub-font2: "Cafe24SsurroundAir";
+  --title-font: "SchoolSafetyAquariumDecor";
 
-  --main-bg: #f1f4fa;
+  --main-bg: #f4f5f7;
   --font-color: #333;
 
   --white: #ffffff;
@@ -16,15 +16,18 @@
   --white500: #333333;
   --white600: #00000000;
 
-  --black: #000000;
-  --black100: #101011;
-  --black200: #202020;
-  --black300: #303030;
-  --black400: #404040;
-  --black500: #505050;
-  --black600: rgba(0, 0, 0, 0.1); //투명
-  --black700: rgba(0, 0, 0, 0.3); //투명
-  --black800: rgba(0, 0, 0, 0.2); //투명
+  --black: #000;
+  --black100: #1d1d1d; /* 가장 어두움 */
+  --black200: #242424;
+  --black300: #3d3d3d;
+  --black400: #414141;
+  --black500: #575e67;
+  --black600: #6b6b6b;
+  --black700: #6c757d;
+  --black800: #9aa3ad;
+  --black900: #b4b4b4;
+  --black1000: #d4d4d4;
+  --black1100: rgba(0, 0, 0, 0.2); //투명
 
   // blue
   --blue100: #003380;
@@ -35,6 +38,17 @@
   --blue600: #80b3ff;
   --blue700: #b3d1ff;
   --blue800: #e6f0ff;
+
+  //red
+  --red100: #ff7272;
+  --red200: #fa3b3b;
+  --red300: #da1616;
+
+  // card_bg
+  --card1: #fef2f2;
+  --card2: #fff8e6;
+  --card3: #ebfbf1;
+  --card4: #eeedff;
 
   /* 폰트를 부드럽게 렌더링하기 위한 속성  */
   font-synthesis: none;

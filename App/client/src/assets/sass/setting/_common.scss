@@ -3,8 +3,150 @@
 body {
   background-color: var(--main-bg);
   color: var(--font-color);
+  font-family: var(--mainKo-font);
 }
 
 main {
-  // min-height: 80vh;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.contents_wrap {
+  width: 100%;
+  height: 90%;
+  padding: 1rem 2rem;
+}
+
+.wrap {
+  width: 100%;
+  height: 100%;
+  background: var(--white);
+  border-radius: 2rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.center {
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.two_wrap {
+  align-items: center;
+  align-content: center;
+  justify-content: space-around;
+}
+
+// button
+.btn_signal {
+  width: 80%;
+  text-align: center;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.btn {
+  width: 100%;
+  font-size: 1.8rem;
+  padding: 0.5rem 1rem;
+  color: var(--white);
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn_green {
+  background-color: var(--blue400);
+
+  &:hover {
+    background-color: var(--blue300);
+  }
+}
+
+.btn_red {
+  background-color: var(--red100);
+
+  &:hover {
+    background-color: var(--red200);
+  }
+}
+
+.btn_gray {
+  background-color: var(--black700);
+
+  &:hover {
+    background-color: var(--black600);
+  }
+}
+
+.checkbutton {
+  position: absolute;
+  right: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  color: var(--white);
+  cursor: pointer;
+}
+
+// popup
+.pop_layer {
+  display: none;
+
+  &.popup {
+    display: block;
+    background: rgba(0, 0, 0, 0.226);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    z-index: 100;
+    transform: translate(-50%, 0%);
+  }
+}
+
+.modal {
+  display: none;
+  position: relative;
+}
+
+.modal_select {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.5rem;
+
+  span {
+    width: 25%;
+    color: var(--black);
+    font-size: 1.1rem;
+    font-weight: bold;
+    word-break: keep-all;
+    margin-right: 0.5rem;
+  }
+
+  input {
+    width: 70%;
+    padding: 1rem 1.2rem;
+    font-size: 1.2rem;
+    background: none;
+    color: var(--black);
+    font-weight: bold;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 1000px transparent inset; /* 배경을 투명으로 덮어씌움 */
+      -webkit-text-fill-color: inherit; /* 텍스트 색상 상속 */
+    }
+  }
 }
