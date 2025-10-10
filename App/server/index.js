@@ -18,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // express router
 app.use("/api/user", require("./router/user.js"));
+app.use("/api/ai", require("./router/server.js"));
 app.use("/uploads", express.static("uploads"));
 // app.use("/api/post", require("./router/study.js"));
 
