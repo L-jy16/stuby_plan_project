@@ -32,8 +32,6 @@ const DeletePopup = ({ id, popup, setPopup }) => {
 
       const data = await response.json();
 
-      console.log(data);
-
       return data.success;
     } catch (error) {
       console.error("에러 발생:", error);

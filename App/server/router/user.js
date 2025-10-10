@@ -28,9 +28,8 @@ router.post("/join", async (req, res) => {
     // 2. Counter 조회
     let counter = await Counter.findOne({ name: "counter" });
     if (!counter) {
-      counter = new Counter({ name: "counter", userNum: 1 });
+      counter = new Counter({ name: "counter", userNum: 1, studyNum: 1 });
       await counter.save();
-      console.log("Counter 생성 완료!");
     }
 
     // 3. 비밀번호 암호화

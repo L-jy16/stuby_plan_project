@@ -22,6 +22,14 @@
         border-radius: 1rem;
         padding: 1rem;
 
+        &.active {
+          border: 3px solid var(--red200);
+        }
+
+        &.red_card {
+          border: 3px solid var(--red200);
+        }
+
         .card_title {
           width: 100%;
           font-size: 1.2rem;
@@ -39,6 +47,10 @@
 
               strong {
                 font-weight: bold;
+              }
+
+              &.red_day {
+                color: red;
               }
             }
             .percent {
