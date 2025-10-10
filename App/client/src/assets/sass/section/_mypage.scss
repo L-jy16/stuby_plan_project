@@ -13,6 +13,33 @@
     &.mypage_left {
       flex-direction: column;
 
+      .changeImg_wrap {
+        position: relative;
+        justify-content: flex-end;
+        margin-bottom: 1rem;
+        width: 80%;
+
+        .btn_gray {
+          z-index: 1;
+          font-size: 1rem;
+          position: relative;
+          width: 9rem;
+          cursor: pointer;
+        }
+
+        .change_input {
+          position: absolute;
+          font-size: 0;
+          top: 0;
+          right: 0;
+          width: 9rem;
+          height: 100%;
+          opacity: 0; // 완전히 투명
+          cursor: pointer; // 버튼처럼 보이게
+          z-index: 2; // 버튼 위에 있어 클릭 가능
+        }
+      }
+
       h3 {
         text-align: center;
         width: 100%;
@@ -80,6 +107,16 @@
       .btn_signal {
         margin-top: 1rem;
         width: 100%;
+      }
+
+      .btn_wrap {
+        margin-top: 1rem;
+        width: 70%;
+        justify-content: space-between;
+
+        .btn {
+          width: 5em;
+        }
       }
     }
   }

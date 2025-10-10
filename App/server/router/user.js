@@ -2,11 +2,13 @@
 
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
+// const upload = multer({ dest: "uploads/" });
+
+const path = require("path");
 
 const { User } = require("../model/User.js");
 const { Counter } = require("../model/Counter.js");
-
-// 이미지 업로드
 
 // 회원 가입
 const bcrypt = require("bcrypt");
@@ -94,6 +96,7 @@ router.post("/login", async (req, res) => {
       success: true,
       message: "로그인 성공",
       userData: {
+        // userNum: user.userNum,
         userId: user.userId,
         userNickName: user.userNickName,
         uid: user.uid,
@@ -108,40 +111,103 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// 로그아웃
-// router.post("/logout", (req, res) => {
-//   try {
-//     // 세션 사용 시
-//     req.session.destroy((err) => {
-//       if (err) {
-//         console.error(err);
-//         return res
-//           .status(500)
-//           .json({ success: false, message: "로그아웃 실패" });
-//       }
-//       res.clearCookie("connect.sid"); // 세션 쿠키 삭제
-//       res.status(200).json({ success: true, message: "로그아웃 성공" });
-//     });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(400).json({ success: false, message: "로그아웃 실패" });
-//   }
-// });
+// 회원수정
+router.post("/update", async (req, res) => {
+  try {
+    const { userId, userNickName, userPass } = req.body;
+
+    const user = await User.findOne({ userId });
+    if (!user) {
+      return res.status(404).json({ success: false, message: "사용자 없음" });
+    }
+
+    if (userNickName) user.userNickName = userNickName;
+    if (userPass) {
+      const bcrypt = require("bcrypt");
+      const salt = await bcrypt.genSalt(10);
+      user.userPass = await bcrypt.hash(userPass, salt); // 비밀번호 암호화
+    }
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "회원 정보 업데이트 성공",
+      userData: {
+        userId: user.userId,
+        userNickName: user.userNickName,
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ success: false });
+  }
+});
+
+// 회원탈퇴
+router.post("/delete", async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+    const deletedUser = await User.findOneAndDelete({ userId });
+
+    if (!deletedUser) {
+      return res
+        .status(404)
+        .json({ success: false, message: "사용자를 찾을 수 없습니다." });
+    }
+
+    return res.status(200).json({ success: true, message: "회원 탈퇴 완료" });
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ success: false });
+  }
+});
+
+// multer 설정
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    const fileName = `${Date.now()}${ext}`;
+    cb(null, fileName);
+  },
+});
+const upload = multer({ storage });
 
 // 프로필 사진(몽고디비 photoURL이 변경된 사진의 url로 변경)  => 네이버 클라우드와 몽고디비 photoURL이 같음
-router.post("/profile/update", (req, res) => {
-  let temp = {
-    photoURL: req.body.photoURL,
-  };
+router.post("/updateImg", upload.single("file"), async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const file = req.file;
 
-  User.updateOne({ uid: req.body.uid }, { $set: temp })
-    .exec()
-    .then(() => {
-      res.status(200).json({ success: true });
-    })
-    .catch((err) => {
-      res.status(400).json({ success: false });
+    const user = await User.findOne({ userId });
+    if (!user) {
+      return res.status(404).json({ success: false, message: "사용자 없음" });
+    }
+
+    // 파일 업로드 후 URL 저장 (예: 서버에 저장한 경로)
+    if (file) {
+      user.uid = `/uploads/${file.filename}`;
+      user.photoURL = `/uploads/${file.filename}`;
+    }
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "프로필 사진 업데이트 성공",
+      userData: {
+        uid: user.uid,
+        photoURL: user.photoURL,
+      },
     });
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ success: false });
+  }
 });
 
 module.exports = router;

@@ -4,6 +4,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Avatar from "react-avatar";
+import { BASE_URL } from "../../api";
 
 const Header = () => {
   const navgaite = useNavigate();
@@ -58,7 +59,7 @@ const Header = () => {
               className="avatar"
               size="30"
               round={true}
-              src={user.photoURL}
+              src={`${BASE_URL}${user.photoURL}`}
             />
             <strong>{user.nickName}</strong> 님
           </div>

@@ -13,10 +13,12 @@ const config = require("./config/key.js");
 app.use(cors());
 app.use(express.static(path.join(__dirname, "../client/build")));
 app.use(express.json());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(express.urlencoded({ extended: true }));
 
 // express router
 app.use("/api/user", require("./router/user.js"));
+app.use("/uploads", express.static("uploads"));
 // app.use("/api/post", require("./router/study.js"));
 
 app.listen(port, () => {

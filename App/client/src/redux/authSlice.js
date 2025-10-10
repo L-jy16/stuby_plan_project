@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 // 초기 상태 설정
 const initialState = {
+  // userNum: "",
   id: "",
   nickName: "",
   uid: "",
@@ -15,6 +16,7 @@ const initialState = {
 const savedUser = sessionStorage.getItem("user");
 if (savedUser) {
   const parsedUser = JSON.parse(savedUser);
+  // initialState.userNum = parsedUser.userNum;
   initialState.id = parsedUser.id;
   initialState.nickName = parsedUser.nickName;
   initialState.uid = parsedUser.uid;
@@ -27,6 +29,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action) => {
+      // state.userNum = action.payload.userNum;
       state.id = action.payload.id;
       state.nickName = action.payload.nickName;
       state.uid = action.payload.uid;
@@ -38,6 +41,7 @@ export const userSlice = createSlice({
     },
 
     logout: (state) => {
+      // state.userNum = "";
       state.id = "";
       state.nickName = "";
       state.uid = "";
