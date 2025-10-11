@@ -71,15 +71,15 @@ router.get("/study_info/:userId", async (req, res) => {
 });
 
 // checked 값 업데이트
-router.patch("/study_info/:studyId", async (req, res) => {
-  const { studyId } = req.params;
-  const { checked } = req.body; // true 또는 false
+router.patch("/study_checked/:studyNum", async (req, res) => {
+  const { studyNum } = req.params;
+  const { content } = req.body; // content만 업데이트
 
   try {
-    const updatedStudy = await Study.findByIdAndUpdate(
-      studyId,
-      { checked },
-      { new: true } // 업데이트 후 새 document 반환
+    const updatedStudy = await Study.findOneAndUpdate(
+      { studyNum: Number(studyNum) }, // 찾을 조건
+      { $set: { content: content } }, // content만 업데이트
+      { new: true } // 업데이트된 document 반환
     );
 
     if (!updatedStudy) {

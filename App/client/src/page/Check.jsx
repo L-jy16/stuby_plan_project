@@ -5,6 +5,7 @@ import Header from "../components/layout/Header";
 import { useSelector } from "react-redux";
 import { BASE_URL } from "../api";
 import moment from "moment";
+import AlertPopup from "../components/popup/AlertPopup";
 
 const Check = () => {
   const user = useSelector((state) => state.user);
@@ -13,7 +14,15 @@ const Check = () => {
   const [goals, setGoals] = useState([]);
   const [goalsNum, setGoalsNum] = useState("");
   const [goalsList, setGoalsList] = useState([]);
+
+  const [goalsUpdate, setGoalsUpdate] = useState(false);
   const [goalsEnd, setGoalsEnd] = useState("");
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [alertPopup, setAlertPopup] = useState(false); // alert 창
+  const [alertMessage, setAlertMessage] = useState("");
+
   const today = new Date();
 
   const study_list = async () => {
@@ -45,12 +54,70 @@ const Check = () => {
 
   useEffect(() => {
     study_list();
-  }, []);
+  }, [goalsUpdate]);
 
   const infoList = (goal, checkSave) => {
     setGoalsNum(goal.studyNum);
     setGoalsList(goal.content);
     setGoalsEnd(checkSave);
+  };
+
+  const saveListInfofetch = async () => {
+    try {
+      const response = await fetch(
+        `${BASE_URL}/api/study/study_checked/${goalsNum}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            content: goalsList,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        // throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+
+      return data.success;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const saveListInfoBtn = async () => {
+    setIsLoading(true);
+    try {
+      const success = await saveListInfofetch();
+
+      if (success) {
+        setAlertMessage("일정이 등록 되었습니다!");
+        setAlertPopup(true);
+        setIsLoading(false);
+        setGoalsUpdate(!goalsUpdate);
+        return;
+      } else {
+        setAlertMessage("일정 등록에 실패하였습니다.");
+        setAlertPopup(true);
+        setIsLoading(false);
+        setGoalsNum("");
+        setGoalsList([]);
+        setGoalsEnd("");
+        setGoalsUpdate(!goalsUpdate);
+        return;
+      }
+    } catch (err) {
+      console.error(err);
+      setAlertMessage("서버 에러 발생");
+      setAlertPopup(true);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -70,7 +137,9 @@ const Check = () => {
                   (item) => item.checked
                 );
 
-                const percent = Math.round(checkedItems.length / contentNum);
+                const percent = Math.round(
+                  (checkedItems.length / contentNum) * 100
+                );
 
                 // 일(day) 단위 차이 계산
                 const diffDays = Math.ceil(
@@ -116,7 +185,11 @@ const Check = () => {
                         <span className="percent">{percent}%</span>
                       </div>
 
-                      <progress value="5" className="progress" />
+                      <progress
+                        value={percent}
+                        max="100"
+                        className="progress"
+                      />
                     </div>
                   </div>
                 );
@@ -145,27 +218,69 @@ const Check = () => {
 
             <div className="check_List">
               <ul>
-                {goalsList.map((list) => (
-                  <li
-                    key={list._id}
-                    className={`check_list_wrap flex ${
-                      list.checked ? "checked" : ""
-                    }`}
-                  >
-                    <input
-                      type="checkbox"
-                      className="check_list_checked"
-                      name="check_list_checked"
-                      onChange={() => ChangeHandle(list._id)}
-                      checked={list.checked || false}
-                    />
+                {goalsEnd.length < 0
+                  ? goalsList.map((list) => (
+                      <li
+                        key={list._id}
+                        className={`check_list_wrap flex ${
+                          list.checked ? "checked" : ""
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          className="check_list_checked"
+                          name="check_list_checked"
+                          checked={list.checked}
+                        />
 
-                    <div className="check_info flex center">
-                      <span className="check_date">{list.date}</span>
-                      <span className="check_list_info">{list.text}</span>
-                    </div>
-                  </li>
-                ))}
+                        <div className="check_info flex center">
+                          <span className="check_date">{list.date}</span>
+                          <span className="check_list_info">{list.text}</span>
+                        </div>
+                      </li>
+                    ))
+                  : !goalsEnd
+                  ? goalsList.map((list) => (
+                      <li
+                        key={list._id}
+                        className={`check_list_wrap flex ${
+                          list.checked ? "checked" : ""
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          className="check_list_checked"
+                          name="check_list_checked"
+                          checked={list.checked}
+                        />
+
+                        <div className="check_info flex center">
+                          <span className="check_date">{list.date}</span>
+                          <span className="check_list_info">{list.text}</span>
+                        </div>
+                      </li>
+                    ))
+                  : goalsList.map((list) => (
+                      <li
+                        key={list._id}
+                        className={`check_list_wrap flex ${
+                          list.checked ? "checked" : ""
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          className="check_list_checked"
+                          name="check_list_checked"
+                          onChange={() => ChangeHandle(list._id)}
+                          checked={list.checked || false}
+                        />
+
+                        <div className="check_info flex center">
+                          <span className="check_date">{list.date}</span>
+                          <span className="check_list_info">{list.text}</span>
+                        </div>
+                      </li>
+                    ))}
               </ul>
             </div>
 
@@ -175,12 +290,31 @@ const Check = () => {
               <></>
             ) : (
               <div className="btn_signal">
-                <button className="btn btn_green">저장</button>
+                <button
+                  className="btn btn_green"
+                  onClick={isLoading ? undefined : saveListInfoBtn}
+                >
+                  저장
+                </button>
               </div>
             )}
           </div>
         </div>
       </div>
+
+      <div className={`loading ${isLoading ? "overlay" : ""}`}>
+        <div className="cv-spinner">
+          <span className="spinner"></span>
+        </div>
+      </div>
+
+      {alertPopup && (
+        <AlertPopup
+          alertPopup={alertPopup}
+          setAlertPopup={setAlertPopup}
+          alertMessage={alertMessage}
+        />
+      )}
     </>
   );
 };
