@@ -76,7 +76,7 @@ const CalendarPage = () => {
 
   useEffect(() => {
     changeDate();
-  }, [value]);
+  }, [value, goalsList]);
 
   return (
     <>
