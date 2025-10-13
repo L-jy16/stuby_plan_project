@@ -44,7 +44,7 @@ const Home = () => {
       <div className="home_wrap flex">
         <div className="banner flex">
           <h2 className="banner_text">
-            학습 비서와 함게하는
+            학습 비서와 함께하는
             <br />
             나만의 학습 플래너✨
           </h2>
