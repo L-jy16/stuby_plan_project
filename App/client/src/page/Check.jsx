@@ -95,7 +95,7 @@ const Check = () => {
       const success = await saveListInfofetch();
 
       if (success) {
-        setAlertMessage("일정이 등록 되었습니다!");
+        setAlertMessage("일정이 완료 되었습니다!");
         setAlertPopup(true);
         setIsLoading(false);
         setGoalsUpdate(!goalsUpdate);
