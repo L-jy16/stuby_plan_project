@@ -2,14 +2,22 @@
 
 # stuby_plan_project
 
-client
-npx create-react-app .;
-npm i sass react-router-dom react-redux @reduxjs/toolkit moment
+### client <br/>
 
-server
-npm init -y;  
-npm install express --save;
-npm install nodemon --save;
-npm install path --save;
-npm install mongoose --save;
-npm install multer --save;
+npx create-react-app .; <br/>
+npm i sass react-router-dom react-redux @reduxjs/toolkit moment <br/>
+
+<br/>
+
+### server <br/>
+
+npm init -y; <br/>
+npm install express --save; <br/>
+npm install nodemon --save; <br/>
+npm install path --save; <br/>
+npm install mongoose --save; <br/>
+npm install multer --save; <br/>
+
+## error part
+
+### server part

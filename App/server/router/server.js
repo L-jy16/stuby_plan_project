@@ -1,13 +1,14 @@
 /** @format */
 
 const express = require("express");
+const config = require("../config/key.js");
 const { GoogleGenAI } = require("@google/genai");
 
 const router = express.Router();
 
-const apiKey = "AIzaSyDpT6TvaozccjjJ5LdhBlGaG18LW8ys1pQ";
+// const apiKey = "AIzaSyDpT6TvaozccjjJ5LdhBlGaG18LW8ys1pQ";
 
-const ai = new GoogleGenAI({ apiKey: apiKey });
+const ai = new GoogleGenAI({ apiKey: config.geminiAPI });
 
 // /plan POST 라우터
 router.post("/plan", async (req, res) => {
