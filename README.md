@@ -2,10 +2,7 @@
 
 # stuby_plan_project
 
-# MYUDUCK
-
-뮤지컬 관련하여 리뷰 및 정보를 공유하는 사이트를 만들었습니다.<br />
-팀원으로는 강서현, 정해연, 이지영 으로 구성되어 있습니다.<br />
+학습 플래너 서비스를 제공하는 웹 사이트 입니다.<br/>
 
 <img width="500" src="./App/client/src/assets/images/MainPage.png">
 
