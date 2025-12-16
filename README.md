@@ -8,9 +8,10 @@
 
 ## 사용 스택
 
-- Front-end : <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white"/> <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=CSS3&logoColor=white"/> <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-0769AD?style=flat&logo=JavaScript&logoColor=white"> <img src="https://img.shields.io/badge/jQuery-1572B6?style=flat&logo=jQuery&logoColor=white"/> <img src="https://img.shields.io/badge/swiper-3498DB?style=flat&logo=swiper&logoColor=white"/>
-- Back-end : <img src="https://img.shields.io/badge/PHP-777BB4?style=flat&logo=php&logoColor=white"/>
-- Databse : <img src="https://img.shields.io/badge/MySQL-00000F?style=flat&logo=MySQL&logoColor=white"/>
+- Front-end : <img alt="React" src="https://img.shields.io/badge/React-61DAFB?logo=React&logoColor=white"> <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-0769AD?style=flat&logo=JavaScript&logoColor=white">
+- Back-end :<img alt="Node.js" src="https://img.shields.io/badge/Node.js-339933?logo=Node.js&logoColor=white">
+- Databse : <img src="https://img.shields.io/badge/mongodb?style=flat&logo=mongodb&logoColor=white"
+  />
 
 ## 프로젝트 소개
 
