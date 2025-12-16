@@ -10,8 +10,7 @@
 
 - Front-end : <img alt="React" src="https://img.shields.io/badge/React-61DAFB?logo=React&logoColor=white"> <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-0769AD?style=flat&logo=JavaScript&logoColor=white">
 - Back-end :<img alt="Node.js" src="https://img.shields.io/badge/Node.js-339933?logo=Node.js&logoColor=white">
-- Databse : <img src="https://img.shields.io/badge/mongodb?style=flat&logo=mongodb&logoColor=white"
-  />
+- Databse : <img src="https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=MongoDB&logoColor=white"/>
 
 ## 프로젝트 소개
 
